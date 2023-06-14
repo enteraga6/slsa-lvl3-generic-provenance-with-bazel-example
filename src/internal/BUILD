@@ -4,7 +4,7 @@ cc_binary(
 )
 
 cc_library(
-  name = "lib",
+  name = "libTEST",
   srcs = ["lib.cc"],
   hdrs = ["lib.h"],
 )
