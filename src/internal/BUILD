@@ -12,7 +12,7 @@ cc_library(
 cc_binary(
   name = "test",
   srcs = ["test.cc"],
-  deps = [":lib"],
+  deps = [":libTEST"],
 )
 
 cc_binary(
