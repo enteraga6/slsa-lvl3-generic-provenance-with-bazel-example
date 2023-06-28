@@ -13,7 +13,7 @@ jobs:
         uses: enteraga6/slsa-github-generator/.github/workflows/builder_bazel_slsa3.yml@runfile-main
         with:
             targets: "//src:Main_deploy.jar" #USER INPUTTED MATERIAL
-            needs-runfiles: true
+            needs-runfiles: false
             includes-java: true
             user-local-javabin: "/usr/local/buildtools/java/jdk/bin/java"
     download:
