@@ -1,0 +1,24 @@
+name: cquery - User Workflow with No Runfile Dependencies
+
+on: 
+    workflow_dispatch:
+    release:
+        types: [created]
+jobs:
+    build:
+        permissions:
+          id-token: write # For signing
+          contents: read # For repo checkout.
+          actions: read # For getting workflow run info.
+        uses: enteraga6/slsa-github-generator/.github/workflows/builder_bazel_slsa3.yml@runfile-main
+        with:
+            targets: "//src:fib //src:hello //src/internal:fib2 //src/internal:test //src/internal:runfiles" #USER INPUTTED MATERIAL
+            needs-runfiles: false
+    download:
+            needs: [build]
+            runs-on: ubuntu-latest
+            steps:
+            - name: Download Attestation
+              uses: actions/download-artifact@v3
+              with:
+                name: "${{ needs.build.outputs.attestations-download-name }}"
