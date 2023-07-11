@@ -33,8 +33,9 @@ jobs:
             - name: Debug
               shell: bash
               run: |
-                echo "${{ needs.build.outputs.binaries-download-name.name }}"
-                echo "${{ needs.build.outputs.binaries-download-name.name }}"
+                echo "$(basename "${{ needs.build.outputs.attestations-download-name }}")"
+                echo "$(basename "${{ needs.build.outputs.binaries-download-name }}")"
+
                 echo ""
                 ls -a
                 
