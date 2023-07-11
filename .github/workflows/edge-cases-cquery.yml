@@ -22,20 +22,19 @@ jobs:
             needs: [build]
             runs-on: ubuntu-latest
             steps:
-            - name: Download Attestation
+            - id: download-att
               uses: actions/download-artifact@v3
               with:
                 name: "${{ needs.build.outputs.attestations-download-name }}"
-            - name: Download Binaries 
+            - id: download-bin 
               uses: actions/download-artifact@v3
               with:
                 name: "${{ needs.build.outputs.binaries-download-name }}"
             - name: Debug
               shell: bash
               run: |
-                echo "$(basename "${{ needs.build.outputs.attestations-download-name }}")"
-                echo "$(basename "${{ needs.build.outputs.binaries-download-name }}")"
-
+                echo "${{ steps.download-att.outputs.download-path }}"
+                echo "${{ steps.download-bin.outputs.download-path }}"
                 echo ""
                 ls -a
                 
