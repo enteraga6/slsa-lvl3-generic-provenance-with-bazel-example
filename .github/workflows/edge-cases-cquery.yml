@@ -4,6 +4,9 @@ on:
     workflow_dispatch:
     release:
         types: [created]
+    push:
+        tags:
+            - v*.*.*
 jobs:
     build:
         permissions:
@@ -23,3 +26,15 @@ jobs:
               uses: actions/download-artifact@v3
               with:
                 name: "${{ needs.build.outputs.attestations-download-name }}"
+            - name: Download Binaries 
+              uses: actions/download-artifact@v3
+              with:
+                name: "${{ needs.build.outputs.binaries-download-name }}"
+            - name: Release
+              uses: softprops/action-gh-release@v1
+              if: startsWith(github.ref, 'refs/tags/')
+              with:
+                files: |
+                    "${{ needs.build.outputs.attestations-download-name }}"
+                    "${{ needs.build.outputs.binaries-download-name }}"
+
