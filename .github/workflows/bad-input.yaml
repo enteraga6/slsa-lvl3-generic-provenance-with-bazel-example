@@ -1,0 +1,48 @@
+name: Bad Input
+
+on: 
+    workflow_dispatch:
+    release:
+        types: [created]
+    push:
+        tags:
+            - v*.*.*
+jobs:
+    build:
+        permissions:
+          id-token: write # For signing
+          contents: read # For repo checkout.
+          actions: read # For getting workflow run info.
+        uses: enteraga6/slsa-github-generator/.github/workflows/builder_bazel_slsa3.yml@v1.0.1
+        with:
+            targets: "src/... src/internal:all" #USER INPUTTED MATERIAL
+            needs-runfiles: true
+            includes-java: true
+    download:
+            needs: [build]
+            runs-on: ubuntu-latest
+            steps:
+            - id: download-att
+              uses: actions/download-artifact@v3
+              with:
+                name: "${{ needs.build.outputs.attestations-download-name }}"
+            - id: download-bin 
+              uses: actions/download-artifact@v3
+              with:
+                name: "${{ needs.build.outputs.binaries-download-name }}"
+            - name: Debug
+              shell: bash
+              run: |
+                echo "${{ steps.download-att.outputs.download-path }}"
+                echo "${{ steps.download-bin.outputs.download-path }}"
+                echo ""
+                ls -a
+                
+            - name: Release
+              uses: softprops/action-gh-release@v1
+              if: startsWith(github.ref, 'refs/tags/')
+              with:
+                files: |
+                    "${{ needs.build.outputs.attestations-download-name.name }}"
+                    "${{ needs.build.outputs.binaries-download-name.name }}"
+
