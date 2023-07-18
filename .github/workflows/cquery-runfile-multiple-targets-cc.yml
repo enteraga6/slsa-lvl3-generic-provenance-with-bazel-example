@@ -10,7 +10,7 @@ jobs:
           id-token: write # For signing
           contents: read # For repo checkout.
           actions: read # For getting workflow run info.
-        uses: enteraga6/slsa-github-generator/.github/workflows/builder_bazel_slsa3.yml@runfile-main
+        uses: enteraga6/slsa-github-generator/.github/workflows/builder_bazel_slsa3.yml@chores-secure-validate-temp
         with:
             targets: "//src:fib //src:hello //src/internal:fib2 //src/internal:test //src/internal:runfiles" #USER INPUTTED MATERIAL
             needs-runfiles: true
