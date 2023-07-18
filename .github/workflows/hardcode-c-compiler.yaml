@@ -1,0 +1,21 @@
+name: Hardcode the C Compiler
+
+on: 
+    workflow_dispatch:
+    release:
+        types: [created]
+    push:
+        tags:
+            - v*.*.*
+jobs:
+    build:
+        permissions:
+          id-token: write # For signing
+          contents: read # For repo checkout.
+          actions: read # For getting workflow run info.
+        uses: enteraga6/slsa-github-generator/.github/workflows/builder_bazel_slsa3.yml@chore-secure-temp
+        with:
+            targets: "//src/... //src/internal:all" #USER INPUTTED MATERIAL
+            flags: "--cxxopt='-std=c++11'"
+            needs-runfiles: true
+            includes-java: true
