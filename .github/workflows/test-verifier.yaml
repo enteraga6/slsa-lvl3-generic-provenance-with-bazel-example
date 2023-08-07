@@ -1,4 +1,4 @@
-name: Generate an artifact from slsa-framework/slsa-github-generator from current main
+name: Generate an artifact from slsa-framework/slsa-github-generator from v1.8.0
 
 on: 
     workflow_dispatch:
@@ -11,6 +11,6 @@ jobs:
           id-token: write # For signing
           contents: read # For repo checkout.
           actions: read # For getting workflow run info.
-        uses: slsa-framework/slsa-github-generator/.github/workflows/builder_bazel_slsa3.yml@main
+        uses: slsa-framework/slsa-github-generator/.github/workflows/builder_bazel_slsa3.yml@v1.8.0
         with:
             targets: "//src:fib"
