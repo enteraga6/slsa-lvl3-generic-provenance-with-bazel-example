@@ -1,0 +1,16 @@
+name: Generate an artifact from untrusted Builder to test fail
+
+on: 
+    workflow_dispatch:
+    release:
+        types: [created]
+        
+jobs:
+    build:
+        permissions:
+          id-token: write # For signing
+          contents: read # For repo checkout.
+          actions: read # For getting workflow run info.
+        uses: enteraga6/slsa-github-generator/.github/workflows/builder_bazel_slsa3.yml@v1.0.1
+        with:
+            targets: "//src:fib"
