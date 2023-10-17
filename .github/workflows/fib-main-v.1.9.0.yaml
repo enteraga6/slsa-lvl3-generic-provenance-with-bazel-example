@@ -1,4 +1,4 @@
-name: Generate ALL artifacts from slsa-framework/slsa-github-generator from v1.8.0
+name: Generate Fib and Main from v1.9.0 slsa-framework/slsa-github-generator
 
 on: 
     workflow_dispatch:
