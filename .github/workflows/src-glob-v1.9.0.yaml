@@ -1,0 +1,18 @@
+name: Generate src artifacts from from v1.9.0 slsa-framework/slsa-github-generator
+
+on: 
+    workflow_dispatch:
+    release:
+        types: [created]
+        
+jobs:
+    build:
+        permissions:
+          id-token: write # For signing
+          contents: read # For repo checkout.
+          actions: read # For getting workflow run info.
+        uses: slsa-framework/slsa-github-generator/.github/workflows/builder_bazel_slsa3.yml@v1.9.0
+        with:
+            targets: "//src/..."
+            needs-runfiles: true
+            includes-java: true
