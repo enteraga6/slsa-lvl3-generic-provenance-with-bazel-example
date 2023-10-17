@@ -1,0 +1,18 @@
+name: Generate ALL artifacts from slsa-framework/slsa-github-generator from v1.8.0
+
+on: 
+    workflow_dispatch:
+    release:
+        types: [created]
+        
+jobs:
+    build:
+        permissions:
+          id-token: write # For signing
+          contents: read # For repo checkout.
+          actions: read # For getting workflow run info.
+        uses: slsa-framework/slsa-github-generator/.github/workflows/builder_bazel_slsa3.yml@v1.9.0
+        with:
+            targets: "//src:fib //src:Main"
+            needs-runfiles: true
+            includes-java: true
