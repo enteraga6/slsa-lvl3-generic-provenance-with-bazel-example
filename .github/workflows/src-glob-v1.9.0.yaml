@@ -1,4 +1,4 @@
-name: Generate src artifacts from from v1.9.0 slsa-framework/slsa-github-generator
+name: Generate src artifacts from v1.9.0 slsa-framework/slsa-github-generator
 
 on: 
     workflow_dispatch:
